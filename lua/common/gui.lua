@@ -72,3 +72,20 @@ if vim.g.neovide then
         callback = set_ime
     })
 end
+
+
+local neovide_focus = vim.api.nvim_create_augroup("NeovideFocusTracker", { clear = true })
+
+vim.g.neovide_window_focused = 1
+
+vim.api.nvim_create_autocmd("FocusLost", {
+    group = neovide_focus,
+    pattern = "*",
+    callback = function() vim.g.neovide_window_focused = 0 end,
+})
+
+vim.api.nvim_create_autocmd("FocusGained", {
+    group = neovide_focus,
+    pattern = "*",
+    callback = function() vim.g.neovide_window_focused = 1 end,
+})
