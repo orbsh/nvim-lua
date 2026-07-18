@@ -10,10 +10,10 @@ local term_theme = {
 }
 
 local theme
-if vim.g.background == 'light' then
-    theme = require 'lualine.themes.gruvbox_light'
-else
+if vim.g.background == 'dark' then
     theme = require 'lualine.themes.gruvbox-material'
+else
+    theme = require 'lualine.themes.gruvbox_light'
 end
 
 local diag = { 'diagnostics', symbols = { error = 'E', warn = 'W', info = 'I', hint = 'H' } }
