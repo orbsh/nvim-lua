@@ -98,15 +98,8 @@ return {
     },
 
     {
-        'nvim-treesitter/nvim-treesitter',
-        branch = 'main',
-        --build = ':TSUpdate',
+        'romus204/tree-sitter-manager.nvim',
         config = h.settings 'treesitter',
-        enabled = vim.g.nvim_level >= 2,
-    },
-    {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-        dependencies = { 'nvim-treesitter/nvim-treesitter' },
         enabled = vim.g.nvim_level >= 2,
     },
     {
@@ -130,7 +123,7 @@ return {
     --]]
     {
         'mizlan/iswap.nvim',
-        dependencies = { 'nvim-treesitter' },
+        dependencies = { 'romus204/tree-sitter-manager.nvim' },
         config = h.settings 'swap',
         enabled = vim.g.nvim_level >= 2,
     },

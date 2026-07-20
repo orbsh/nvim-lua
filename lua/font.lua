@@ -14,8 +14,6 @@ MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;tex
 --]]
 
 
-local features = { 'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig' }
-
 local fonts_abbr = {
     Lilex = "Lilex",
     JetBrainsMono = "JetBrainsMono Nerd Font Mono",
@@ -36,7 +34,9 @@ function M.parse(f)
     M.name = fonts_abbr[n] or n
     M.size = vim.g.select_font_size
     M.opt = o
-    M.features = features
+    if vim.g.neovide then
+        vim.g.neovide_font_features = { "Lilex: -calt, +liga, +ss01, +ss02" }
+    end
     return M
 end
 

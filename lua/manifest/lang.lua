@@ -44,5 +44,10 @@ return {
     {
         'towolf/vim-helm',
         enabled = vim.g.nvim_level >= 3,
-    }
+    },
+    {
+        'iamcco/markdown-preview.nvim',
+        ft = 'markdown',
+        build = 'cd app && npm install',
+    },
 }

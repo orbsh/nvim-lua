@@ -1,7 +1,7 @@
 vim.lsp.enable {
     "nushell",
     --"pyright",
-    "pyrefly",
+    --"pyrefly",  -- moved to settings/lang/python/lsp.lua (with venv detection)
     "hls",
     --"julials",
     --"metals",
