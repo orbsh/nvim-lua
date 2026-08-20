@@ -29,7 +29,12 @@ require('lazy').setup('manifest', {
         root = lazyhome .. '/readme',
     },
     lockfile = lazyhome .. '/lazy-lock.json',
-    change_detection = { enabled = false }
+    change_detection = { enabled = false },
+    rocks = {
+        -- 使用系统 luarocks（NixOS 声明的 lua5_1 + luarocks），而非 hererocks 自建
+        -- hererocks 自建环境在 NixOS 上缺 readline 头文件、CXX 编译器变量，容易构建失败
+        hererocks = false,
+    },
 })
 
 local user_config = os.getenv("HOME") .. '/.nvim.lua'

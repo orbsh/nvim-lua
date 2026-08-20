@@ -26,20 +26,14 @@ return {
     },
     {
         "nvim-neorg/neorg",
-        --build = ":Neorg sync-parsers",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        config = h.settings 'neorg',
-        enabled = false
-    },
-    {
-        'nvim-orgmode/orgmode',
-        keys = {
-            { '<leader>oa', nil, desc = 'orgmode agenda' },
-            { '<leader>oc', nil, desc = 'orgmode capture' },
+        dependencies = {
+            "nvim-neorg/lua-utils.nvim",
+            "pysan3/pathlib.nvim",
+            "nvim-neotest/nvim-nio",
+            "MunifTanjim/nui.nvim",
         },
-        ft = { 'org' },
-        config = h.settings 'orgmode',
-        enabled = false,
+        config = h.settings 'neorg',
+        enabled = vim.g.nvim_level >= 3,
     },
     {
         'towolf/vim-helm',
