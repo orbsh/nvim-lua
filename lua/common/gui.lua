@@ -14,6 +14,7 @@ if vim.g.neovide or vim.g.server_mode then
         neovide_floating_blur_amount_x = 2.0,
         neovide_floating_blur_amount_y = 2.0,
         neovide_hide_mouse_when_typing = true,
+        neovide_refresh_rate = 30,  -- Wayland 下 VSync 被忽略时限制渲染帧率上限，防止空闲空转烧 CPU（配合 config vsync=false）
         neovide_underline_automatic_scaling = true,
         neovide_cursor_animate_command_line = true,
         neovide_cursor_animation_length = 0.15,

@@ -53,7 +53,7 @@ function M:guifont()
 end
 
 function M.parse_env()
-    local default_font = 'Lilex11'
+    local default_font = 'Lilex12'
     return M.parse(os.getenv("NVIM_FONT") or default_font)
 end
 
