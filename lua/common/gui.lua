@@ -14,7 +14,7 @@ if vim.g.neovide or vim.g.server_mode then
         neovide_floating_blur_amount_x = 2.0,
         neovide_floating_blur_amount_y = 2.0,
         neovide_hide_mouse_when_typing = true,
-        neovide_refresh_rate = 30,  -- Wayland 下 VSync 被忽略时限制渲染帧率上限，防止空闲空转烧 CPU（配合 config vsync=false）
+        neovide_refresh_rate = 30,  -- Cap render FPS when VSync is ignored on Wayland (idle spin prevention, paired with config vsync=false)
         neovide_underline_automatic_scaling = true,
         neovide_cursor_animate_command_line = true,
         neovide_cursor_animation_length = 0.15,
@@ -52,8 +52,23 @@ end
 
 if vim.g.neovide then
     local function set_ime(args)
+        -- Core guard: skip entirely until Neovide's UI has fully attached, to avoid a startup deadlock
+        if vim.g.neovide and not vim.g.neovide_channel_id then
+            return
+        end
+
         if args.event:match("Enter$") then
-            vim.g.neovide_input_ime = true
+            if args.event:match("^Cmdline") then
+                -- Safely wrap getcmdtype: it can error during very early startup
+                local ok, cmd_type = pcall(vim.fn.getcmdtype)
+                if ok and (cmd_type == "/" or cmd_type == "?") then
+                    vim.g.neovide_input_ime = true
+                else
+                    vim.g.neovide_input_ime = false
+                end
+            else
+                vim.g.neovide_input_ime = true
+            end
         else
             vim.g.neovide_input_ime = false
         end
@@ -61,15 +76,13 @@ if vim.g.neovide then
 
     local ime_input = vim.api.nvim_create_augroup("ime_input", { clear = true })
 
-    vim.api.nvim_create_autocmd({ "InsertEnter", "InsertLeave", "TermEnter", "TermLeave" }, {
+    vim.api.nvim_create_autocmd({
+        "InsertEnter", "InsertLeave",
+        "TermEnter", "TermLeave",
+        "CmdlineEnter", "CmdlineLeave"
+    }, {
         group = ime_input,
         pattern = "*",
-        callback = set_ime
-    })
-
-    vim.api.nvim_create_autocmd({ "CmdlineEnter", "CmdlineLeave" }, {
-        group = ime_input,
-        pattern = "[/\\?]",
         callback = set_ime
     })
 end
