@@ -1,3 +1,24 @@
+-- PR_SET_PDEATHSIG: 让 neovide 拉起的 nvim 在其直接父进程(neovide)死亡时自动收到
+-- SIGTERM，从内核层面根治「UI 窗口关了但 nvim 永久无头存活、持续吃内存」的泄漏。
+-- 用 NEOVIDE_FRAME 判定(exec 时即置位, 比 vim.g.neovide 更早可靠), 不误伤 zellij/终端 nvim。
+-- getppid 竞态保护: 父进程已死(被 init 收养, ppid=1)时不再武装, 避免误设。
+do
+  if os.getenv("NEOVIDE_FRAME") then
+    pcall(function()
+      local ok, ffi = pcall(require, "ffi")
+      if not ok then return end
+      ffi.cdef([[
+        int getppid(void);
+        int prctl(int option, unsigned long arg2, unsigned long arg3,
+                  unsigned long arg4, unsigned long arg5);
+      ]])
+      if ffi.C.getppid() ~= 1 then
+        ffi.C.prctl(1, 15, 0, 0, 0) -- PR_SET_PDEATHSIG=1 + SIGTERM=15
+      end
+    end)
+  end
+end
+
 local font = require('font')
 vim.opt.guicursor:append { 'a:blinkon0' }
 require('setup').keymap_table {
