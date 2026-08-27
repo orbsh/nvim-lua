@@ -53,7 +53,7 @@ function M:guifont()
 end
 
 function M.parse_env()
-    local default_font = 'Lilex12'
+    local default_font = 'Lilex13'
     return M.parse(os.getenv("NVIM_FONT") or default_font)
 end
 
@@ -62,7 +62,7 @@ function M.from_env()
 end
 
 
-vim.g.select_font_size = 11
+vim.g.select_font_size = 13
 vim.api.nvim_create_user_command('SelectFont',
     function(ctx)
         local font = M.parse(ctx.args):guifont()
