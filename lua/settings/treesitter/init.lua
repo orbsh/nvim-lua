@@ -19,7 +19,26 @@ end
 -- ── tree-sitter-manager setup ───────────────────────
 local tsm = require('tree-sitter-manager')
 tsm.setup({
+    -- norg/norg_meta 由 nvim-neorg 项目自维护，不在 tsm 内置 registry 里，需手动注册
+    languages = {
+        norg = {
+            install_info = {
+                url = "https://github.com/nvim-neorg/tree-sitter-norg",
+                location = "src",
+                revision = "d89d95af13d409f30a6c7676387bde311ec4a2c8", -- v0.2.6
+            },
+        },
+        norg_meta = {
+            install_info = {
+                url = "https://github.com/nvim-neorg/tree-sitter-norg-meta",
+                location = "src",
+                revision = "6f0510cc516a3af3396a682fbd6655486c2c9d2d", -- v0.1.0
+            },
+        },
+    },
     ensure_installed = {
+        "norg",
+        "norg_meta",
         "css",
         "diff",
         "dockerfile",
