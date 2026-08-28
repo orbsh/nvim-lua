@@ -5,8 +5,7 @@
  - [ ] flash.nvim
     - [ ] two char jump to line
     - [ ] target include punctuation `[]{}<>'",;#`
- - [x] neorg
- - [x] convenient copy/paste
+  - [x] convenient copy/paste
     - set clipboard+=unnamedplus
  - [x] kill buf
     - bdelete

@@ -25,17 +25,6 @@ return {
         enabled = vim.g.nvim_level >= 3,
     },
     {
-        "nvim-neorg/neorg",
-        dependencies = {
-            "nvim-neorg/lua-utils.nvim",
-            "pysan3/pathlib.nvim",
-            "nvim-neotest/nvim-nio",
-            "MunifTanjim/nui.nvim",
-        },
-        config = h.settings 'neorg',
-        enabled = vim.g.nvim_level >= 3,
-    },
-    {
         'towolf/vim-helm',
         enabled = vim.g.nvim_level >= 3,
     },
