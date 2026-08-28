@@ -87,11 +87,14 @@ if vim.g.neovide then
                 else
                     vim.g.neovide_input_ime = false
                 end
-            else
+            elseif args.event == "TermEnter" then
+                -- 终端模式：进入打开输入法
                 vim.g.neovide_input_ime = true
+            else
+                vim.g.neovide_input_ime = true   -- InsertEnter：中文可用
             end
         else
-            vim.g.neovide_input_ime = false
+            vim.g.neovide_input_ime = false      -- InsertLeave/TermLeave/CmdlineLeave：全部英文
         end
     end
 
